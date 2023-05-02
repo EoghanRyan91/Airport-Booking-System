@@ -1,10 +1,11 @@
 import tkinter as tk
+import sqlite3
 from tkinter import ttk
 from tkinter import messagebox as mb
-   
-   
+
 class AirportBookingSystem:
-   
+       
+      
        def __init__(self, master):
           self.master = master
           self.master.title("Airport Booking System")
@@ -114,9 +115,34 @@ class AirportBookingSystem:
                       message = f"You have booked a {seat_type} seat from {dep_airport} to {dest_airport} with a return. "
                       message += f"Your booking reference is AB123."
                       mb.showinfo("Booking Confirmed", message)
-                      
-  
-  
+
+                
+      # Create a table to store flight details
+
+          conn = sqlite3.connect('flight_database.db')
+
+      # Create a table to store the flight details:
+
+          c = conn.cursor()
+          c.execute('''CREATE TABLE IF NOT EXISTS flights
+                          (passenger_name text, departure_airport text,
+                          destination_airport text, seat_type text)''')
+          
+          conn.commit()
+
+          
+          passenger_name = self.passenger_name_var.get()
+          departure_airport = self.dep_airports_var.get()
+          destination_airport = self.dest_airports_var.get()
+          seat_type = self.seat_types_var.get()
+          second_leg = self.second_leg_var.get()
+
+
+          c.execute("INSERT INTO flights VALUES (?, ?, ?, ?)", (passenger_name, departure_airport, destination_airport, seat_type))
+
+          conn.commit()
+          conn.close()
+          
 if __name__ == "__main__":
       root = tk.Tk()
       app = AirportBookingSystem(root)
