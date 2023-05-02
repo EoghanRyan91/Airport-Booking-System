@@ -66,6 +66,20 @@ class AirportBookingSystem:
           self.dep_airports_combobox["values"] = sorted(self.airports)
           self.dest_airports_combobox["values"] = sorted(self.airports)
   
+
+       def confirm_booking(self):
+          flight_details = f"Passenger name: {self.passenger_name_var.get()}\n"
+          flight_details += f"Departure airport: {self.dep_airports_var.get()}\n"
+          flight_details += f"Destination airport: {self.dest_airports_var.get()}\n"
+          flight_details += f"Seat type: {self.seat_types_var.get()}\n" 
+
+          confirmed = mb.askyesno("Confirm Booking", f"Please confirm the following details:\n\n{flight_details}")
+
+          if confirmed:
+              self.book_flight
+          if not confirmed:
+              mb.showerror("Error", "Please return and finish booking!")
+
        def book_flight(self):
           dep_airport = self.dep_airports_var.get()
           dest_airport = self.dest_airports_var.get()
@@ -73,23 +87,34 @@ class AirportBookingSystem:
           direction = self.direction_var.get()
           second_leg = self.second_leg_var.get()
           passenger_name = self.passenger_name_var.get()
-  
+
+       
+          if not passenger_name:
+              mb.showerror("Error", "Please enter your name for booking!")
+              return
+        
           if dep_airport == dest_airport:
               mb.showerror("Error", "Departure and destination airports cannot be the same.")
           else:
               if direction == "one-way":
+                  self.confirm_booking()
                   message = f"You have booked a {seat_type} seat from {dep_airport} to {dest_airport}. "
                   message += f"Your booking reference is AB123."
                   mb.showinfo("Booking Confirmed", message)
+                  
               else:
                   if second_leg:
+                      self.confirm_booking()
                       message = f"You have booked a {seat_type} seat from {dep_airport} to {dest_airport} with a second leg. "
                       message += f"Your booking reference is AB123."
                       mb.showinfo("Booking Confirmed", message)
+                     
                   else:
+                      self.confirm_booking()
                       message = f"You have booked a {seat_type} seat from {dep_airport} to {dest_airport} with a return. "
                       message += f"Your booking reference is AB123."
                       mb.showinfo("Booking Confirmed", message)
+                      
   
   
 if __name__ == "__main__":
