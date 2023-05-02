@@ -1,5 +1,6 @@
 import tkinter as tk
 import sqlite3
+import AdminWindow
 from tkinter import ttk
 from tkinter import messagebox as mb
 
@@ -62,9 +63,10 @@ class AirportBookingSystem:
           book_button.grid(row=6, column=1, padx=5, pady=5, sticky="e")
 
           # Create Admin Button
-          admin_button = ttk.Button(self.master, text="Admin")
+          admin_button = ttk.Button(self.master, text="Admin", command=AdminWindow.AdminWindow)
           admin_button.grid(row=6,column=0, padx=5, pady=5)
-  
+
+        
           # Create departure and destination airports list
           self.airports = ["Paris (CDG)", "London (LHR)", "Frankfurt (FRA)", "Amsterdam (AMS)",
                             "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Athens (ATH)"]
