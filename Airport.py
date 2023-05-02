@@ -60,6 +60,10 @@ class AirportBookingSystem:
           # Create book button
           book_button = ttk.Button(self.master, text="Book", command=self.book_flight)
           book_button.grid(row=6, column=1, padx=5, pady=5, sticky="e")
+
+          # Create Admin Button
+          admin_button = ttk.Button(self.master, text="Admin")
+          admin_button.grid(row=6,column=0, padx=5, pady=5)
   
           # Create departure and destination airports list
           self.airports = ["Paris (CDG)", "London (LHR)", "Frankfurt (FRA)", "Amsterdam (AMS)",
