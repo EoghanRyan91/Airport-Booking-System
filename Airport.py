@@ -1,4 +1,6 @@
 import tkinter as tk
+import subprocess
+from tkinter import simpledialog
 import sqlite3
 import AdminWindow
 from tkinter import ttk
@@ -62,11 +64,19 @@ class AirportBookingSystem:
           book_button = ttk.Button(self.master, text="Book", command=self.book_flight)
           book_button.grid(row=6, column=1, padx=5, pady=5, sticky="e")
 
+          # Admin Window Function (from admin button)
+          def open_admin_window():
+              password = "test"
+              user_input = tk.simpledialog.askstring("Password", "Enter password", show='*')
+              if user_input == password:
+                 subprocess.Popen(["python", "AdminWindow.py"])
+              else:
+                 mb.showwarning("Invalid Password", "You have entered an invalid password.")
+
           # Create Admin Button
-          admin_button = ttk.Button(self.master, text="Admin", command=AdminWindow.AdminWindow)
+          admin_button = ttk.Button(self.master, text="Admin", command=open_admin_window)
           admin_button.grid(row=6,column=0, padx=5, pady=5)
 
-        
           # Create departure and destination airports list
           self.airports = ["Paris (CDG)", "London (LHR)", "Frankfurt (FRA)", "Amsterdam (AMS)",
                             "Madrid (MAD)", "Barcelona (BCN)", "Rome (FCO)", "Athens (ATH)"]
